@@ -1,4 +1,8 @@
 
+; create excel file from ahk
+; insert cell ?
+; data object and then create excel file ?
+; lib ?
 
 
 ; convert strat to code
