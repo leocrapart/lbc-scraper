@@ -3,7 +3,7 @@
 
 
 ; store scraped data in a big array
-data := [{location:"33400 Talence", number: "0652722632", url: "https://leboncoin.fr"}
+data := [{location:"33400 Talence", number: "0612457896", url: "https://leboncoin.fr"}
 , {location:"14000 Caen", number: "0123456789", url: "https://leboncoin.fr"}
 , {location:"75000 Paris", number: "0", url: "https://leboncoin.fr"}]
 
