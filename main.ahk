@@ -1,8 +1,17 @@
 
-; create excel file from ahk
-; insert cell ?
-; data object and then create excel file ?
-; lib ?
+
+
+
+
+; create excel file
+
+FileDelete % "C:\Users\leocr\Desktop\lbc-scraper\scraped-data.xlsx"
+
+xl := ComObjCreate("Excel.Application")
+wb := xl.workbooks.add()
+xl.range("a1:a1").value := "test5"
+wb.saveas("C:\Users\leocr\Desktop\lbc-scraper\scraped-data.xlsx")
+xl.quit()
 
 
 ; convert strat to code
@@ -22,3 +31,6 @@
 ; https://seloger.com
 ; https://bienici.com
 ; https://pap.fr
+
+
+
