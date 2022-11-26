@@ -1,6 +1,72 @@
 
 ; scrape data and put into the data array
 
+scrape() {
+	; open browser 
+	; go to leboncoin.fr
+	; login
+	; search for ventes immo in first location
+	; click on first post
+	; collect infos
+	; put infos in data object
+	; go back to posts list
+
+	; click on second post
+	; collect infos
+	; put infos in data object
+	; go back to posts list
+	; ...
+
+	; next page
+	; collect
+	; ...
+	; search for ventes immo in second location
+
+
+; collect infos
+; 	voir le numéro
+; 1150, 500
+
+; annuler popup	
+; 1050, 220
+
+; select number
+; start drag
+; 1350, 500
+
+; end drag
+; 970, 500
+
+; ctrl-c
+
+
+; select url
+; 1000, 50
+; ctrl-c
+
+; select title ?
+; start drag
+; 250, 600
+
+; end drag
+; 620, 720
+
+; ctrl-c
+
+; select company
+; start drag
+; 1060, 270
+
+; end drag
+; 1270, 310
+
+; ctrl-c
+
+; select siret
+; doubleClick(1150, 350)
+; ctrl-c
+
+}
 
 ; store scraped data in a big array
 data := [{location:"33400 Talence", number: "0612457896", url: "https://leboncoin.fr"}
