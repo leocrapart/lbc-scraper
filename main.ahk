@@ -25,13 +25,12 @@ scrape() {
 
 ; collect infos
 ; 	voir le numéro
-; 1150, 500
+; 1150, 500	
 	click 1150, 500
 
 ; annuler popup	
 ; 1050, 220
 	click 1050, 220
-
 
 ; select number
 ; start drag
@@ -41,8 +40,6 @@ scrape() {
 ; end drag
 ; 970, 500
 	endDrag(970, 500)
-	
-; ctrl-c
 	copy()
 
 ; select url
@@ -55,13 +52,10 @@ scrape() {
 ; start drag
 ; 250, 600
 	startDrag(250, 600)
-	
 
 ; end drag
 ; 620, 720
 	endDrag(620, 720)
-
-; ctrl-c
 	copy()
 
 ; select company
@@ -72,15 +66,16 @@ scrape() {
 ; end drag
 ; 1270, 310
 	endDrag(1270, 310)
-
-; ctrl-c	
 	copy()
 
 ; select siret
 	doubleClick(1150, 350)
 	copy()
-; ctrl-c
+}
 
+copy() {
+	send ^c
+	return
 }
 
 ; store scraped data in a big array
