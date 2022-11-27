@@ -26,44 +26,59 @@ scrape() {
 ; collect infos
 ; 	voir le numéro
 ; 1150, 500
+	click 1150, 500
 
 ; annuler popup	
 ; 1050, 220
+	click 1050, 220
+
 
 ; select number
 ; start drag
 ; 1350, 500
+	startDrag(1350, 500)
 
 ; end drag
 ; 970, 500
-
+	endDrag(970, 500)
+	
 ; ctrl-c
-
+	copy()
 
 ; select url
 ; 1000, 50
 ; ctrl-c
+	click 1000, 50
+	copy()
 
 ; select title ?
 ; start drag
 ; 250, 600
+	startDrag(250, 600)
+	
 
 ; end drag
 ; 620, 720
+	endDrag(620, 720)
 
 ; ctrl-c
+	copy()
 
 ; select company
 ; start drag
 ; 1060, 270
+	startDrag(1060, 270)
 
 ; end drag
 ; 1270, 310
+	endDrag(1270, 310)
 
-; ctrl-c
+; ctrl-c	
+	copy()
 
 ; select siret
-; doubleClick(1150, 350)
+	doubleClick(1150, 350)
+	copy()
 ; ctrl-c
 
 }
