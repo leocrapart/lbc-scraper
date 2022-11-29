@@ -1,5 +1,140 @@
-
+CoordMode, Mouse, Screen
 ; scrape data and put into the data array
+
+; scrape one page
+; https://www.leboncoin.fr/ventes_immobilieres/2258641246.htm
+
+; => number + title + company + siret + url
+
+pageData := scrapeOnePage("https://www.leboncoin.fr/ventes_immobilieres/2255713992.htm")
+
+; store in excel
+
+data := []
+data.push(pageData)
+
+saveData(data)
+
+saveData(data) {
+	; data looks like =>
+	; data := [{number: "0612457896", url: "https://www.leboncoin.fr/ventes_immobilieres/2258641246.htm", title: "maison", company: "SAFTI", siret: "52396432800026"}
+	; , {number: "0612457896", url: "https://www.leboncoin.fr/ventes_immobilieres/2258641246.htm", title: "maison", company: "SAFTI", siret: "52396432800026"}]
+
+	; create excel file
+	; location, url, number
+
+	FileDelete % "C:\Users\leocr\Desktop\lbc-scraper\scraped-data.xlsx"
+
+	xl := ComObjCreate("Excel.Application")
+	wb := xl.workbooks.add()
+
+	;create titles
+	xl.range("a1:a1").value := "number"
+	xl.range("b1:b1").value := "url"
+	xl.range("c1:c1").value := "title"
+	xl.range("d1:d1").value := "company"
+	xl.range("e1:e1").value := "siret"
+
+	; insert data
+	for index, element in data {
+		rowNum := index + 1
+		xl.range("a" rowNum ":a" rowNum).value := data[index]["number"]
+		xl.range("b" rowNum ":b" rowNum).value := data[index]["url"]
+		xl.range("c" rowNum ":c" rowNum).value := data[index]["title"]
+		xl.range("d" rowNum ":d" rowNum).value := data[index]["company"]
+		xl.range("e" rowNum ":e" rowNum).value := data[index]["siret"]
+	}
+
+	;save
+	wb.saveas("C:\Users\leocr\Desktop\lbc-scraper\scraped-data.xlsx")
+	xl.quit()
+}
+
+
+	
+
+scrapeOnePage(pageUrl) {
+	; select url
+	click 1000, 50
+	sleep 1000
+
+	; paste url
+	paste(pageUrl)
+	sleep 500
+
+	; load page
+	send {enter}
+	sleep 5000
+
+	pageData := {}
+
+	; voir le numéro
+	click 1150, 500
+	sleep 1000
+
+	; annuler popup
+	click 1045, 218
+	sleep 1000
+
+	; select number
+	sleep 1000
+	MouseClickDrag left, 1350, 500, 970, 500
+	sleep 1000
+
+	; store number
+	send ^c
+	sleep 100
+	number := % Clipboard
+	pageData.number := number
+	sleep 1000
+
+	; select url
+	click 1000, 50
+	sleep 1000
+
+	; store url
+	send ^c
+	sleep 100
+	url := % Clipboard
+	pageData.url := url
+	sleep 1000
+
+	; select title ?
+	MouseClickDrag left, 250, 600, 620, 720
+	sleep 1000
+
+	; store title
+	send ^c
+	sleep 100
+	title := % Clipboard
+	pageData.title := title
+	sleep 1000
+
+	; select company
+	MouseClickDrag left, 1065, 280, 1270, 280
+	sleep 1000
+
+	; store company
+	send ^c
+	sleep 100
+	company := % Clipboard
+	pageData.company := company
+	sleep 1000
+
+	; select siret
+	click 1150, 350
+	sleep 100
+	click 1150, 350
+	sleep 1000
+	
+	; store siret
+	send ^c
+	sleep 100
+	siret := % Clipboard
+	pageData.siret := siret
+
+	return pageData
+}
 
 scrape() {
 	; open browser 
@@ -23,92 +158,38 @@ scrape() {
 	; search for ventes immo in second location
 
 
-; collect infos
-; 	voir le numéro
-; 1150, 500	
-	click 1150, 500
+	; store scraped data in a big array
+	data := [{location:"33400 Talence", number: "0612457896", url: "https://leboncoin.fr"}
+	, {location:"14000 Caen", number: "0123456789", url: "https://leboncoin.fr"}
+	, {location:"75000 Paris", number: "0", url: "https://leboncoin.fr"}]
 
-; annuler popup	
-; 1050, 220
-	click 1050, 220
 
-; select number
-; start drag
-; 1350, 500
-	startDrag(1350, 500)
+	; create excel file
+	; location, url, number
 
-; end drag
-; 970, 500
-	endDrag(970, 500)
-	copy()
+	FileDelete % "C:\Users\leocr\Desktop\lbc-scraper\scraped-data.xlsx"
 
-; select url
-; 1000, 50
-; ctrl-c
-	click 1000, 50
-	copy()
+	xl := ComObjCreate("Excel.Application")
+	wb := xl.workbooks.add()
 
-; select title ?
-; start drag
-; 250, 600
-	startDrag(250, 600)
+	;create titles
+	xl.range("a1:a1").value := "location"
+	xl.range("b1:b1").value := "url"
+	xl.range("c1:c1").value := "number"
 
-; end drag
-; 620, 720
-	endDrag(620, 720)
-	copy()
+	; insert data
+	for index, element in data {
+		rowNum := index + 1
+		xl.range("a" rowNum ":a" rowNum).value := data[index]["location"]
+		xl.range("b" rowNum ":b" rowNum).value := data[index]["url"]
+		xl.range("c" rowNum ":c" rowNum).value := data[index]["number"]
+	}
 
-; select company
-; start drag
-; 1060, 270
-	startDrag(1060, 270)
+	;save
+	wb.saveas("C:\Users\leocr\Desktop\lbc-scraper\scraped-data.xlsx")
+	xl.quit()
 
-; end drag
-; 1270, 310
-	endDrag(1270, 310)
-	copy()
-
-; select siret
-	doubleClick(1150, 350)
-	copy()
 }
-
-copy() {
-	send ^c
-	return
-}
-
-; store scraped data in a big array
-data := [{location:"33400 Talence", number: "0612457896", url: "https://leboncoin.fr"}
-, {location:"14000 Caen", number: "0123456789", url: "https://leboncoin.fr"}
-, {location:"75000 Paris", number: "0", url: "https://leboncoin.fr"}]
-
-
-; create excel file
-; location, url, number
-
-FileDelete % "C:\Users\leocr\Desktop\lbc-scraper\scraped-data.xlsx"
-
-xl := ComObjCreate("Excel.Application")
-wb := xl.workbooks.add()
-
-;create titles
-xl.range("a1:a1").value := "location"
-xl.range("b1:b1").value := "url"
-xl.range("c1:c1").value := "number"
-
-; insert data
-for index, element in data {
-	rowNum := index + 1
-	xl.range("a" rowNum ":a" rowNum).value := data[index]["location"]
-	xl.range("b" rowNum ":b" rowNum).value := data[index]["url"]
-	xl.range("c" rowNum ":c" rowNum).value := data[index]["number"]
-}
-
-;save
-wb.saveas("C:\Users\leocr\Desktop\lbc-scraper\scraped-data.xlsx")
-xl.quit()
-
 
 ; convert strat to code
 ; scrape postal codes from the given excel file
@@ -128,5 +209,15 @@ xl.quit()
 ; https://bienici.com
 ; https://pap.fr
 
+paste(text) {
+  clipboard = %text%
+  send ^v
+  return
+}
 
+copy() {
+	send ^c
+	return
+}
 
+ESC::ExitApp
