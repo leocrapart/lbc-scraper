@@ -1,12 +1,30 @@
 CoordMode, Mouse, Screen
 ; scrape data and put into the data array
 
-; scrape one page
-; https://www.leboncoin.fr/ventes_immobilieres/2258641246.htm
+; make script from the search with postal code
+; click first page
+; scrape page
+; go back
+; click second page
+; scrape page
+; store in excel file
 
-; => number + title + company + siret + url
 
-pageData := scrapeOnePage("https://www.leboncoin.fr/ventes_immobilieres/2255713992.htm")
+
+; load page 
+; select url
+click 1000, 50
+sleep 1000
+
+; paste url
+paste("https://www.leboncoin.fr/ventes_immobilieres/2255713992.htm")
+sleep 500
+
+; load page
+send {enter}
+sleep 5000
+
+pageData := scrapePage()
 
 ; store in excel
 
@@ -15,57 +33,38 @@ data.push(pageData)
 
 saveData(data)
 
-saveData(data) {
-	; data looks like =>
-	; data := [{number: "0612457896", url: "https://www.leboncoin.fr/ventes_immobilieres/2258641246.htm", title: "maison", company: "SAFTI", siret: "52396432800026"}
-	; , {number: "0612457896", url: "https://www.leboncoin.fr/ventes_immobilieres/2258641246.htm", title: "maison", company: "SAFTI", siret: "52396432800026"}]
+scrapePostalCode() {
+	code := "01000"
+	; 10km
 
-	; create excel file
-	; location, url, number
+	; tab 0 = 17 tabs
+	; tab 18 20 22 24
+	; pub 7
+	; tab 31 33 35 37 39 
+	; pub 2
+	; 41 43 45
+	; pub 3
+	; 48 50 52 54 56
+	; pub 3
+	; 59 61 63
+	; pub 7
+	; 70 72 74 76 78 80
+	; pub 8
+	; 88 90 92 94 96 98 100 102 104
 
-	FileDelete % "C:\Users\leocr\Desktop\lbc-scraper\scraped-data.xlsx"
 
-	xl := ComObjCreate("Excel.Application")
-	wb := xl.workbooks.add()
-
-	;create titles
-	xl.range("a1:a1").value := "number"
-	xl.range("b1:b1").value := "url"
-	xl.range("c1:c1").value := "title"
-	xl.range("d1:d1").value := "company"
-	xl.range("e1:e1").value := "siret"
-
-	; insert data
-	for index, element in data {
-		rowNum := index + 1
-		xl.range("a" rowNum ":a" rowNum).value := data[index]["number"]
-		xl.range("b" rowNum ":b" rowNum).value := data[index]["url"]
-		xl.range("c" rowNum ":c" rowNum).value := data[index]["title"]
-		xl.range("d" rowNum ":d" rowNum).value := data[index]["company"]
-		xl.range("e" rowNum ":e" rowNum).value := data[index]["siret"]
-	}
-
-	;save
-	wb.saveas("C:\Users\leocr\Desktop\lbc-scraper\scraped-data.xlsx")
-	xl.quit()
+	; ventes immo
+	; send code
+	; click on search
+	; click first page
+	; scrape page
+	; go back
+	; click second page
+	; scrape page
+	; store in excel file
 }
 
-
-	
-
-scrapeOnePage(pageUrl) {
-	; select url
-	click 1000, 50
-	sleep 1000
-
-	; paste url
-	paste(pageUrl)
-	sleep 500
-
-	; load page
-	send {enter}
-	sleep 5000
-
+scrapePage() {
 	pageData := {}
 
 	; voir le numéro
@@ -135,6 +134,46 @@ scrapeOnePage(pageUrl) {
 
 	return pageData
 }
+
+saveData(data) {
+	; data looks like =>
+	; data := [{number: "0612457896", url: "https://www.leboncoin.fr/ventes_immobilieres/2258641246.htm", title: "maison", company: "SAFTI", siret: "52396432800026"}
+	; , {number: "0612457896", url: "https://www.leboncoin.fr/ventes_immobilieres/2258641246.htm", title: "maison", company: "SAFTI", siret: "52396432800026"}]
+
+	; create excel file
+	; location, url, number
+
+	FileDelete % "C:\Users\leocr\Desktop\lbc-scraper\scraped-data.xlsx"
+
+	xl := ComObjCreate("Excel.Application")
+	wb := xl.workbooks.add()
+
+	;create titles
+	xl.range("a1:a1").value := "number"
+	xl.range("b1:b1").value := "url"
+	xl.range("c1:c1").value := "title"
+	xl.range("d1:d1").value := "company"
+	xl.range("e1:e1").value := "siret"
+
+	; insert data
+	for index, element in data {
+		rowNum := index + 1
+		xl.range("a" rowNum ":a" rowNum).value := data[index]["number"]
+		xl.range("b" rowNum ":b" rowNum).value := data[index]["url"]
+		xl.range("c" rowNum ":c" rowNum).value := data[index]["title"]
+		xl.range("d" rowNum ":d" rowNum).value := data[index]["company"]
+		xl.range("e" rowNum ":e" rowNum).value := data[index]["siret"]
+	}
+
+	;save
+	wb.saveas("C:\Users\leocr\Desktop\lbc-scraper\scraped-data.xlsx")
+	xl.quit()
+}
+
+
+	
+
+
 
 scrape() {
 	; open browser 
