@@ -37,6 +37,14 @@ CoordMode, Mouse, Screen
 	scrapePostalCode()
 
 
+; plan : 
+; find number of tabs for each posts
+; make arr of it
+; access by index
+; scrape
+; save to excel
+
+
 scrapePostalCode() {
 	; code := "01000"
 	; 10km
