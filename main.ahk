@@ -11,34 +11,85 @@ CoordMode, Mouse, Screen
 
 
 
-; load page 
-; select url
-click 1000, 50
-sleep 1000
+; ; load page 
+; ; select url
+; click 1000, 50
+; sleep 1000
 
-; paste url
-paste("https://www.leboncoin.fr/ventes_immobilieres/2255713992.htm")
-sleep 500
+; ; paste url
+; paste("https://www.leboncoin.fr/ventes_immobilieres/2255713992.htm")
+; sleep 500
 
-; load page
-send {enter}
-sleep 5000
+; ; load page
+; send {enter}
+; sleep 5000
 
-pageData := scrapePage()
+; pageData := scrapePage()
 
-; store in excel
+; ; store in excel
 
-data := []
-data.push(pageData)
+; data := []
+; data.push(pageData)
 
-saveData(data)
+; saveData(data)
+
+^t::
+	scrapePostalCode()
+
 
 scrapePostalCode() {
-	code := "01000"
+	; code := "01000"
 	; 10km
+	data := []
 
 	; tab 0 = 17 tabs
 	; tab 18 20 22 24
+	tabsToPage := [4
+	, 6
+	, 8
+	, 10
+	, 17]
+
+	click 252, 640
+	sleep 100
+	sendTabs(tabsToPage[1])
+	send {enter}
+	sleep 5000
+	pageData := scrapePage()
+	data.push(pageData)
+	click 20, 50
+	sleep 3000
+
+	click 252, 640
+	sleep 100
+	sendTabs(tabsToPage[2])
+	send {enter}
+	sleep 5000
+	pageData := scrapePage()
+	data.push(pageData)
+	click 20, 50
+	sleep 3000
+
+	click 252, 640
+	sleep 100
+	sendTabs(tabsToPage[3])
+	send {enter}
+	sleep 5000
+	pageData := scrapePage()
+	data.push(pageData)
+	click 20, 50
+	sleep 3000
+
+	click 252, 640
+	sleep 100
+	sendTabs(tabsToPage[4])
+	send {enter}
+	sleep 5000
+	pageData := scrapePage()
+	data.push(pageData)
+	click 20, 50
+	sleep 3000
+
 	; pub 7
 	; tab 31 33 35 37 39 
 	; pub 2
@@ -52,6 +103,7 @@ scrapePostalCode() {
 	; pub 8
 	; 88 90 92 94 96 98 100 102 104
 
+	saveData(data)
 
 	; ventes immo
 	; send code
@@ -62,6 +114,14 @@ scrapePostalCode() {
 	; click second page
 	; scrape page
 	; store in excel file
+
+}
+
+sendTabs(n) {
+	loop %n% {
+		send {tab}
+		sleep 100
+	}
 }
 
 scrapePage() {
@@ -110,7 +170,7 @@ scrapePage() {
 	sleep 1000
 
 	; select company
-	MouseClickDrag left, 1065, 280, 1270, 280
+	MouseClickDrag left, 1065, 280, 1310, 320
 	sleep 1000
 
 	; store company

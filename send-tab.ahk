@@ -1,9 +1,9 @@
 ^t::
-	loop 10000 {
+	sendTabs(50)
+
+sendTabs(n) {
+	loop %n% {
 		send {enter}
-		send {Tab}	
+		send {tab}
 	}
-
-
-
-ESC::ExitApp
+}
