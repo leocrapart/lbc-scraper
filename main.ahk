@@ -44,6 +44,12 @@ CoordMode, Mouse, Screen
 ; scrape
 ; save to excel
 
+; scrape  https://www.vigneron-independant.com
+; search with nothing (https://www.vigneron-independant.com/search-vigneron?keywords=)
+; moove 100, 400
+; click 400, 400
+; tabs find post
+; scrape page
 
 scrapePostalCode() {
 	; code := "01000"
