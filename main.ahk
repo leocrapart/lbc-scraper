@@ -50,6 +50,18 @@ CoordMode, Mouse, Screen
 ; click 400, 400
 ; tabs find post
 ; scrape page
+; title 
+; domain name
+; name
+; address 
+; tel
+; mobile 
+; fax
+; website
+; url
+
+;  ? copy paste page and then extract data from string ?
+; slurp ?
 
 scrapePostalCode() {
 	; code := "01000"
