@@ -38,6 +38,12 @@ CoordMode, Mouse, Screen
 
 
 ; plan : 
+; get urls to scrape
+; show number + ctrl-s on urls, (parallel saving ?)
+; clojure code to process the html and put in excel file
+
+
+
 ; find number of tabs for each posts
 ; make arr of it
 ; access by index
