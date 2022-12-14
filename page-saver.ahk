@@ -1,15 +1,11 @@
 
-
-goToUrl(url) {
-	; click urlbar
-	click 580, 50
-	paste(url)
-	send {enter}
-	sleep 5000
-}
+; next idea : 
+; generate list of leboncoin url
 
 
-savePage() {
+savePage(url) {
+	goToUrl(url)
+
 	send ^s
 	; click pathbar
 	click 348, 49
@@ -19,6 +15,15 @@ savePage() {
 	paste(filename)
 	send {enter}
 }
+
+goToUrl(url) {
+	; click urlbar
+	click 580, 50
+	paste(url)
+	send {enter}
+	sleep 5000
+}
+
 
 
 paste(text) {
